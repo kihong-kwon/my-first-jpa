@@ -1,0 +1,15 @@
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=springdata --name postgres_boot -d postgres
+docker exec -i -t postgres_boot bash
+
+su - postgres
+
+psql -U admin -d springdata
+
+데이터베이스 조회
+\list
+
+테이블 조회
+\dt
+
+쿼리
+SELECT * FROM account;
