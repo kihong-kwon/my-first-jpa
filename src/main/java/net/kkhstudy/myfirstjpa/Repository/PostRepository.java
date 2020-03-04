@@ -1,6 +1,6 @@
 package net.kkhstudy.myfirstjpa.Repository;
 
-import net.kkhstudy.myfirstjpa.Post;
+import net.kkhstudy.myfirstjpa.Entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

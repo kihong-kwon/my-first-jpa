@@ -1,5 +1,6 @@
 package net.kkhstudy.myfirstjpa;
 
+import net.kkhstudy.myfirstjpa.Entity.Comment;
 import net.kkhstudy.myfirstjpa.Repository.CommentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

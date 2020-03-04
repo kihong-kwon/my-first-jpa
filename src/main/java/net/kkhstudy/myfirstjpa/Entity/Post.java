@@ -1,4 +1,6 @@
-package net.kkhstudy.myfirstjpa;
+package net.kkhstudy.myfirstjpa.Entity;
+
+import net.kkhstudy.myfirstjpa.Entity.Comment;
 
 import javax.persistence.*;
 import java.util.HashSet;
