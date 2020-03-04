@@ -1,7 +1,6 @@
 package net.kkhstudy.myfirstjpa;
 
 import net.kkhstudy.myfirstjpa.Repository.PostRepository;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

@@ -1,11 +1,14 @@
 package net.kkhstudy.myfirstjpa;
 
+import net.kkhstudy.myfirstjpa.Entity.PostPublishedEvent;
+import org.springframework.data.domain.AbstractAggregateRoot;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Post {
+public class Post extends AbstractAggregateRoot<Post> {
     @Id
     @GeneratedValue
     private Long id;
@@ -46,4 +49,10 @@ public class Post {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
+    public Post publish() {
+        this.registerEvent(new PostPublishedEvent(this));
+        return this;
+    }
+
 }
