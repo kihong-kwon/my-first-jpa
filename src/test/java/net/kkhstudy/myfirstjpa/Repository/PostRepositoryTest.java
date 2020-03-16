@@ -1,11 +1,13 @@
 package net.kkhstudy.myfirstjpa.Repository;
 
-import net.kkhstudy.myfirstjpa.Repository.PostRepository;
+import com.querydsl.core.types.Predicate;
+import net.kkhstudy.myfirstjpa.Entity.Post;
+import net.kkhstudy.myfirstjpa.QPost;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
@@ -13,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Future;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -24,9 +25,6 @@ public class PostRepositoryTest {
 
     @Autowired
     PostRepository postRepository;
-
-    @Autowired
-    ApplicationContext applicationContext;
 
     @Test
     public void applicationContext() {

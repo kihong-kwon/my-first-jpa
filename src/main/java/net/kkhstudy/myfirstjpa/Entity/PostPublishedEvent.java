@@ -1,6 +1,5 @@
 package net.kkhstudy.myfirstjpa.Entity;
 
-import net.kkhstudy.myfirstjpa.Post;
 import org.springframework.context.ApplicationEvent;
 
 public class PostPublishedEvent extends ApplicationEvent {

@@ -1,7 +1,7 @@
 package net.kkhstudy.myfirstjpa.Repository;
 
 import com.querydsl.core.types.Predicate;
-import net.kkhstudy.myfirstjpa.Account;
+import net.kkhstudy.myfirstjpa.Entity.Account;
 import net.kkhstudy.myfirstjpa.QAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
