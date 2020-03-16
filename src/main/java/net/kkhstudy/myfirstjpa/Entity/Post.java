@@ -6,6 +6,7 @@ import net.kkhstudy.myfirstjpa.Entity.PostPublishedEvent;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ public class Post extends AbstractAggregateRoot<Post> {
     private Long id;
 
     private String title;
+
+    private Date created;
 
     // cascade : Post가 persistent 상태가 될때 연관된 comment도 같이 persistent 상태로 넘어간다.
     // Fatch : 연관된 엔티티를 가져오는 방식, OneToMany의 경우 디폴트는 Lazy(나중에) , ManyToOne의 경우 디폴트는 Eager(지금)
@@ -50,6 +53,14 @@ public class Post extends AbstractAggregateRoot<Post> {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public Post publish() {

@@ -2,32 +2,47 @@ package net.kkhstudy.myfirstjpa.Repository;
 
 import com.querydsl.core.types.Predicate;
 import net.kkhstudy.myfirstjpa.Entity.Post;
-import net.kkhstudy.myfirstjpa.QPost;
+import net.kkhstudy.myfirstjpa.Entity.QPost;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+//@DataJpaTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 @Import(PostRepositoryTestConfig.class)
+@ActiveProfiles("test")
 public class PostRepositoryTest {
 
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    MockMvc mockMvc;
+
     @Test
-    public void applicationContext() {
+    public void applicationContextTest() {
         Post post = new Post();
         post.setTitle("event");
         assertThat(postRepository.contains(post)).isFalse();
@@ -39,12 +54,11 @@ public class PostRepositoryTest {
 
         postRepository.delete(post);
         postRepository.flush();
-
     }
 
     @Test
     @Rollback(false)
-    public void crudRepository() {
+    public void crudRepositoryTest() {
         // Given
         Post post = new Post();
         post.setTitle("Hello spring boot common");
@@ -75,7 +89,25 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void customRepository() {
+    public void pageableTest() throws Exception {
+        Post post = new Post();
+        post.setTitle("jpa");
+        postRepository.save(post);
+
+        mockMvc.perform(get("/postsPageable")
+                    .param("page", "0")
+                    .param("size", "10")
+                    .param("sort", "created,desc")
+                    .param("sort", "title"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(result -> {
+                    jsonPath("$.content[0].title", is("jpa"));
+                });
+    }
+
+    @Test
+    public void customRepositoryTest() {
         Post post = new Post();
         post.setTitle("Test post");
         assertThat(postRepository.contains(post)).isFalse();
