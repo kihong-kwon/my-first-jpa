@@ -1,4 +1,4 @@
-package net.kkhstudy.myfirstjpa;
+package net.kkhstudy.myfirstjpa.Entity;
 
 import javax.persistence.*;
 import java.util.Date;

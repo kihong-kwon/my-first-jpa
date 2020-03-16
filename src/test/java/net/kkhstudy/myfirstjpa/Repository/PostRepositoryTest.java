@@ -1,14 +1,11 @@
 package net.kkhstudy.myfirstjpa.Repository;
 
-import com.querydsl.core.types.Predicate;
-import net.kkhstudy.myfirstjpa.Post;
-import net.kkhstudy.myfirstjpa.QPost;
+import net.kkhstudy.myfirstjpa.Repository.PostRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;

@@ -1,4 +1,6 @@
-package net.kkhstudy.myfirstjpa;
+package net.kkhstudy.myfirstjpa.Entity;
+
+import net.kkhstudy.myfirstjpa.Entity.Comment;
 
 import net.kkhstudy.myfirstjpa.Entity.PostPublishedEvent;
 import org.springframework.data.domain.AbstractAggregateRoot;
