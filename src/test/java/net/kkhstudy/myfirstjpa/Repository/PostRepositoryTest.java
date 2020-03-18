@@ -16,7 +16,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,13 +35,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Import(PostRepositoryTestConfig.class)
 @ActiveProfiles("test")
+@Transactional
 public class PostRepositoryTest {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    MockMvc mockMvc;
+    private EntityManager entityManager;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void saveTest() {
+        Post post = new Post();
+        post.setTitle("jpa");
+        // 엔티티의 @Id 프로퍼티를 찾는다. 해당 프로퍼티가 null이면 Transient 상태로 판단하고
+        // id가 null이 아니면 Detached 상태로 판단한다.
+        // Transient -> Persistent
+        Post savedPost = postRepository.save(post); // insert(EntityManager.persist(E e))
+
+        assertThat(entityManager.contains(post)).isTrue();
+        assertThat(entityManager.contains(savedPost)).isTrue();
+        assertThat(savedPost == post).isTrue();
+
+        Post postUpdate = new Post();
+        postUpdate.setId(post.getId());
+        postUpdate.setTitle("hibernate");
+        // Merged 메소드에 넘긴 그 엔티티의 복사본을 만들고, 그 복사본을 다시 Persistent 상태로 변경하고 그 복사본을 반환한다.
+        // Transient -> Persistent
+        Post updatedPost = postRepository.save(postUpdate); // update(EntityManager.merge(E e))
+
+        assertThat(entityManager.contains(updatedPost)).isTrue();
+        assertThat(entityManager.contains(postUpdate)).isFalse();
+        assertThat(updatedPost == postUpdate).isFalse();
+
+        // updatedPost는 JPA에서 관리되는 객체이기 때문에 jpa hibernate로 업데이트 된다.
+        updatedPost.setTitle("jpa hibernate");
+
+        List<Post> all = postRepository.findAll();
+        assertThat(all.size()).isEqualTo(1);
+
+        // 결론, 항상 repository 쿼리를 실행하면 반환되는 결과의 오브젝트로 다음 처리를 실핸하다.
+        // 그렇지 않으면 JPA가 persistent의 상태변화를 체크하지 못하게 된다.
+    }
 
     @Test
     public void applicationContextTest() {

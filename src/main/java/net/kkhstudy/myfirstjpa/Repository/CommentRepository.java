@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 // JpaRepository를 상속받지 않고 사용할 기능만 정의할 수 있는 기능
 @RepositoryDefinition(domainClass = Comment.class, idClass = Long.class)
+//@NamedQuery(name = "Comment.findByTitle", query = "SELECT p FROM Post AS p WHERE p.title = ?1") // JPQL
 public interface CommentRepository extends MyRepository<Comment, Long> {
     //@Query(value = "SELECT c FROM Comment AS c", nativeQuery = true) // SQL
     //@Query("SELECT c FROM Comment AS c") // JPQL

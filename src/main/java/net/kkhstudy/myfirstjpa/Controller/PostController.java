@@ -44,6 +44,4 @@ public class PostController {
     public PagedResources<Resource<Post>> getPosts(Pageable pageable, PagedResourcesAssembler<Post> assembler) {
         return assembler.toResource(postRepository.findAll(pageable));
     }
-
-
 }

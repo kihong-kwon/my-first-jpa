@@ -1,6 +1,5 @@
 package net.kkhstudy.myfirstjpa.Repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
